@@ -5066,7 +5066,7 @@ float player::fall_damage_mod() const
     // Ability to land properly is 2x as important as dexterity itself
     float dex_dodge = dex_cur / 2 + get_skill_level( skill_dodge );
     // Penalize for wearing heavy stuff
-    dex_dodge -= ( ( encumb(bp_leg_l) + encumb(bp_leg_r) ) / 20 ) + ( encumb(bp_torso) / 10 );
+    dex_dodge -= ( ( ( encumb(bp_leg_l) + encumb(bp_leg_r) ) / 2 ) + ( encumb(bp_torso) / 1 ) ) / 10;
     // But prevent it from increasing damage
     dex_dodge = std::max( 0.0f, dex_dodge );
     // 100% damage at 0, 75% at 10, 50% at 20 and so on
@@ -12295,8 +12295,8 @@ int player::encumb(body_part bp, double &layers, int &armorenc) const
         }
         std::pair<int, int> &this_layer = layer[w.get_layer()];
         int encumber_val = w.get_encumber();
-        // For the purposes of layering penalty, set a min of 1 and a max of 10 per item.
-        int layering_encumbrance = std::min( 10, std::max( 1, encumber_val ) );
+        // For the purposes of layering penalty, set a min of 2 and a max of 10 per item.
+        int layering_encumbrance = std::min( 10, std::max( 2, encumber_val ) );
 
         this_layer.first += layering_encumbrance;
         this_layer.second = std::max(this_layer.second, layering_encumbrance);
